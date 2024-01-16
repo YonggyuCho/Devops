@@ -56,23 +56,43 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/rapa-cicdlab:v${{ env.RELEASE_VERSION }}
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/rapa-cicdlab:latest
 
-      - name: Get EKS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2    
+      # - name: Get EKS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ap-northeast-2    
 
-      - name: Get EKS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2 
+      # - name: Get EKS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: ap-northeast-2 
         
-      - name: Update kube config
-        run: aws eks update-kubeconfig --name yong --region ap-northeast-2
+      # - name: Update kube config
+      #   run: aws eks update-kubeconfig --name yong --region ap-northeast-2
     
-      - name: Update Deployment Image on EKS
-        run: | 
-          kubectl set image deploy mywas mywas=${{ secrets.DOCKERHUB_USERNAME }}/rapa-cicdlab:v${{ env.RELEASE_VERSION }}
+      # - name: Update Deployment Image on EKS
+      #   run: | 
+      #     kubectl set image deploy mywas mywas=${{ secrets.DOCKERHUB_USERNAME }}/rapa-cicdlab:v${{ env.RELEASE_VERSION }}
+      - name: Update Kustomization image tag
+        run: |
+          cd yaml/was-kustomization/
+          # kustomization.yaml 파일에서 이미지 태그를 업데이트합니다.
+          kustomize edit set image cicd-image=yonggyucho/rapa-cicdlab:${{ env.RELEASE_VERSION }}
+          # 변경된 kustomization.yaml 파일을 확인합니다.
+          cat kustomization.yml
+          # 변경사항을 커밋합니다.
+          git config user.name "YonggyuCho"
+          git config user.email "whdydrb741@naver.com"
+          git add .
+          git commit -m "Update image tag to ${{ env.RELEASE_VERSION }}"
+          # 변경사항을 푸시합니다.
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }} # 푸시할 때 사용자 정의 토큰을 환경변수로 설정합니다.
+
+
+
+
