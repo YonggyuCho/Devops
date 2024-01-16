@@ -80,14 +80,14 @@ jobs:
         run: |
           cd yaml/was-kustomization/
           # kustomization.yaml 파일에서 이미지 태그를 업데이트합니다.
-          kustomize edit set image cicd-image=yonggyucho/rapa-cicdlab:${{ env.RELEASE_VERSION }}
+          kustomize edit set image cicd-image=yonggyucho/rapa-cicdlab:v${{ env.RELEASE_VERSION }}
           # 변경된 kustomization.yaml 파일을 확인합니다.
           cat kustomization.yml
           # 변경사항을 커밋합니다.
           git config user.name "YonggyuCho"
           git config user.email "whdydrb741@naver.com"
           git add .
-          git commit -m "Update image tag to ${{ env.RELEASE_VERSION }}"
+          git commit -m "Update image tag to v${{ env.RELEASE_VERSION }}"
           # 변경사항을 푸시합니다.
           git push origin main
         env:
