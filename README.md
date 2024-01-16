@@ -8,4 +8,4 @@ Web (Nginx) -> Was (Tomcat/Spring) -> DB(MYSQL)
 Session Server Use Redis 
 
 
-Use CI/CD on GithubActions
+Use CI/CD on GithubActions/ArgoCD
