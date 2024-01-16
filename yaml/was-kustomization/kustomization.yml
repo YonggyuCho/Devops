@@ -7,5 +7,5 @@ resources:
 images:
 - name: cicd-image
   newName: yonggyucho/rapa-cicdlab
-  newTag: "2"
+  newTag: "3"
 namespace: default
