@@ -6,6 +6,6 @@ resources:
 - was.yaml
 images:
 - name: cicd-image
-  newName: yonggyucho/rapa-cicdlab
-  newTag: v8
+  newName: public.ecr.aws/f1s4m0n8/yong
+  newTag: v10
 namespace: default
