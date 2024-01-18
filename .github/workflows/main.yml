@@ -95,7 +95,8 @@ jobs:
         run: |
           cd yaml/was-kustomization/
           # kustomization.yaml 파일에서 이미지 태그를 업데이트합니다.
-          kustomize edit set image cicd-image=yonggyucho/rapa-cicdlab:v${{ env.RELEASE_VERSION }}
+          # kustomize edit set image cicd-image=yonggyucho/rapa-cicdlab:v${{ env.RELEASE_VERSION }}  #dockerhub
+          # kustomize edit set image cicd-image=$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:v$IMAGE_TAG  #AWS ECR
           # 변경된 kustomization.yaml 파일을 확인합니다.
           cat kustomization.yml
           # 변경사항을 커밋합니다.
@@ -107,6 +108,10 @@ jobs:
           git push origin main
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }} # 푸시할 때 사용자 정의 토큰을 환경변수로 설정합니다.
+          REGISTRY: public.ecr.aws
+          REGISTRY_ALIAS: f1s4m0n8
+          REPOSITORY: yong
+          IMAGE_TAG: ${{ env.RELEASE_VERSION  }}
 
 
 
