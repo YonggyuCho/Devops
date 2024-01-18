@@ -96,7 +96,7 @@ jobs:
           cd yaml/was-kustomization/
           # kustomization.yaml 파일에서 이미지 태그를 업데이트합니다.
           # kustomize edit set image cicd-image=yonggyucho/rapa-cicdlab:v${{ env.RELEASE_VERSION }}  #dockerhub
-          # kustomize edit set image cicd-image=$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:v$IMAGE_TAG  #AWS ECR
+          kustomize edit set image cicd-image=$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:v$IMAGE_TAG  #AWS ECR
           # 변경된 kustomization.yaml 파일을 확인합니다.
           cat kustomization.yml
           # 변경사항을 커밋합니다.
